@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int count1 = 0, count2 = 0,temp;
+        int temp1 = 0, temp2 = 0;
+
+        for(auto i: nums) {
+            if(count1 == 0 && i!=temp2) {
+                count1 = 1;
+                temp1 = i;
+            }
+            else if(count2 == 0 && i!=temp1) {
+                count2 = 1;
+                temp2 = i;
+            }
+            else if(i==temp1) {
+                count1++;
+            }
+            else if(i==temp2) {
+                count2++;
+            }         
+            else {
+                count1--;
+                count2--;
+            }   
+        }
+
+        count1 = 0, count2 = 0;
+        for(auto i: nums) {
+            if(i==temp1) count1++;
+            else if(i==temp2) count2++;
+        }
+
+        int threshold = nums.size()/3;
+        vector<int> res;
+
+        if(count1>threshold)
+            res.push_back(temp1);
+
+        if(count2>threshold)
+            res.push_back(temp2);
+
+        return res;   
+    }
+};
