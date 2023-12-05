@@ -1,0 +1,57 @@
+/*
+
+Rotate List
+Medium
+9.1K
+1.4K
+company
+Amazon
+company
+Adobe
+company
+Apple
+Given the head of a linked list, rotate the list to the right by k places.
+
+
+*/
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        // if 0 or 1 element
+        if(!head || !head->next)
+            return head;
+
+        ListNode* ptr = head;
+        //find len
+        int len=1;
+        while(ptr->next) {
+            ptr=ptr->next;
+            len++;
+        }
+
+        ptr->next = head;
+        ptr = head;
+
+        for(int i=0; i<len-(k%len)-1; i++) {
+            ptr=ptr->next;
+        }
+
+        head = ptr->next;
+        ptr->next = NULL;
+
+        return head;
+    }
+};
