@@ -1,0 +1,59 @@
+/*
+
+Non-decreasing Subsequences
+Medium
+3.5K
+225
+company
+Amazon
+company
+Yahoo
+Given an integer array nums, return all the different possible non-decreasing subsequences of the given array with at least two elements. You may return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [4,6,7,7]
+Output: [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+Example 2:
+
+Input: nums = [4,4,3,2,1]
+Output: [[4,4]]
+ 
+
+*/
+
+
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<int> temp;
+    map<vector<int>,int>X;
+
+    void solve(int index, vector<int> &nums) {
+        if(temp.size()>1) {
+            X[temp]++;
+            if(X[temp]>1)  return;   // already exists    
+            res.push_back(temp);
+        }
+
+        // overload
+        if(index>nums.size()) {
+            return;
+        }
+
+        for(int i=index; i<nums.size(); i++) {
+            // check for case of descreasing order and allow only increasing order
+            if(temp.size()>=1 && nums[i]<temp[temp.size()-1]) continue;
+            temp.push_back(nums[i]);
+            solve(i+1, nums);
+            temp.pop_back();
+        }
+    }
+
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        solve(0, nums);
+        return res;
+    }
+};
