@@ -1,0 +1,97 @@
+/*
+https://practice.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1
+You are given a connected undirected graph. Perform a Depth First Traversal of the graph.
+Note: Use the recursive approach to find the DFS traversal of the graph starting from the 0th vertex from left to right according to the graph.
+*/
+
+// Using recursion
+
+    void solve(int i, int V, vector<int> adj[], vector<int> &res, int visited[]) {
+        visited[i]=0;
+        res.push_back(i);
+        for(auto it: adj[i]) {
+            if(!visited[it])
+                solve(it, V, adj, res, visited);
+        }
+    }
+    
+    // Function to return a list containing the DFS traversal of the graph.
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        vector<int> res;
+        int visited[V] = {0};
+        int i=0;
+        solve(i, V, adj, res, visited);
+        return res;
+    }
+
+
+// using stack
+/*
+vector<vector<int>> depthFirstSearch(int V, int E, vector<vector<int>> &edges)
+{
+    // // Adjacency list
+    // unordered_map<int, vector<int>> adj;
+    // for(int i=0; i<E; i++) {
+    //     int u = edges[i][0];
+    //     int v = edges[i][1]; 
+
+    //     adj[u].push_back(v);
+    //     adj[v].push_back(u);
+    // }
+
+    // vector<vector<int>> res;
+    // vector<bool> visited(V, false);
+
+    // for(int i=0; i<V; i++) {
+    //     if(!visited[i]) {
+    //         vector<int> component;
+    //         solve(i, adj, visited, component);
+    //         res.push_back(component);
+    //     }
+    // }
+
+    // return res;
+
+    // using stack
+    vector<vector<int>> adj(V);
+    for(int i=0; i<E; i++) {
+        int u = edges[i][0];
+        int v = edges[i][1]; 
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<vector<int>> res;
+    vector<bool> visited(V, false);
+
+    for(int i=0; i<V; i++) {
+        if(!visited[i]) {
+            vector<int> temp;
+            stack<int> st;
+            st.push(i);
+
+            while(!st.empty()) {
+                int top = st.top();
+                st.pop();
+                if(!visited[top]) {
+                    temp.push_back(top);
+                    visited[top] = true;
+                }
+
+                for(auto it: adj[top]) {
+                    if(visited[it]==false) {
+                        st.push(it);
+                    }
+                }
+            }
+            res.push_back(temp);
+        }
+    }        
+
+
+    return res;
+}
+
+*/
