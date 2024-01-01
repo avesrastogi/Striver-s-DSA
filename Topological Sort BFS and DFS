@@ -1,0 +1,70 @@
+/*
+Topological Sort BFS and DFS
+Given a Directed Acyclic Graph (DAG) with V vertices and E edges, Find any Topological Sorting of that Graph.
+*/
+
+
+
+
+	
+	void dfs(int i, int visited[], stack<int> &s, vector<int> adj[]) {
+	    visited[i]=1;
+	    for(auto it: adj[i]) {
+	        if(!visited[it]) {
+	           dfs(i, visited, s, adj);
+	        }
+	    }
+	    
+	    s.push(i);
+	}
+	
+	//Function to return list containing vertices in Topological order. 
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	   // vector<int> res;
+	   // // code here
+	   // int indegree[V] = {0};
+	    
+	   // for(int i=0; i<V; i++) {
+	   //     for(auto it: adj[i]) {
+	   //         indegree[it]++;
+	   //     }
+	   // }
+	    
+	   // queue<int> q;
+	    
+	   // for(int j=0; j<V; j++) {
+	   //     if(indegree[j]==0) {
+	   //         q.push(j);
+	   //     }
+	   // }	    
+	    
+	   // while(!q.empty()) {
+	   //     int front = q.front(); 
+	   //     q.pop();
+	   //     res.push_back(front);
+	   //     for(auto it: adj[front]) {
+	   //         indegree[it]--;
+	   //         if(indegree[it]==0) q.push(it);
+	   //     }
+	   // }
+	    
+	   // return res;
+	   
+	   int visited[V] = {0};
+	   stack<int> s;
+	   
+	   for(int i=0; i<V; i++) {
+	       if(!visited[i]) {
+	           dfs(i, visited, s, adj);
+	       }
+	   }
+	   
+	   vector<int> res;
+	   while(!s.empty()) {
+	       res.push_back(s.top());
+	       s.pop();
+	   }
+	   
+	   return res;
+	}
