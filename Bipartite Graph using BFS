@@ -1,0 +1,53 @@
+/*
+Bipartite Graph using BFS
+https://takeuforward.org/graph/bipartite-graph-bfs-implementation/
+
+Given an adjacency list of a graph adj  of V no. of vertices having 0 based index. Check whether the graph is bipartite or not.
+
+*/
+
+
+// Intuition: use a color array set it to -1, keep updating node to 0 and it's adjacent to !color[node] using a queue
+// try solving for one component then use a loop to iterate for all vertices (Multi component Graph)
+
+bool check(int start, int V, vector<int>adj[], int color[]) {
+	    queue<int> q;
+	    q.push(start);
+	  
+        color[start] = 0;
+        while(!q.empty()) {
+            int front = q.front();
+            q.pop();
+            for(auto it: adj[front]) {
+                if(color[it]==-1) {
+                    color[it] = !color[front];
+                    q.push(it);
+                }
+                else if(color[it] == color[front]) {
+                    return false;
+                }
+            }
+        }
+        
+        
+        return true;        
+    }
+    
+	bool isBipartite(int V, vector<int>adj[]){
+	    // Code here
+	    int color[V];
+
+	    for(int i=0; i<V; i++) {
+    	    color[i] = -1;
+	    }
+
+	    for(int i=0; i<V; i++) {
+            if(color[i]==-1) {
+                if(!check(i, V, adj, color)) {
+                    return false;
+                }
+            }	        
+	    }
+	    
+	    return true;
+	}
