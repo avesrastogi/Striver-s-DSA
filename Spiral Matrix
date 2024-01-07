@@ -1,0 +1,70 @@
+/*
+
+Spiral Matrix
+Medium
+14.1K
+1.2K
+company
+Amazon
+company
+Apple
+company
+Adobe
+Given an m x n matrix, return all elements of the matrix in spiral order.
+
+ 
+
+Example 1:
+
+
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+
+*/
+
+
+
+// Think in terms of Left right, Top bottom and use while for basic traversal and inside loops for each directional traversal
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        // brute force
+        vector<int> res;
+        int T = 0, B = matrix.size()-1, L= 0, R = matrix[0].size()-1;
+        int direction = 0;
+
+        while(T<=B && L<=R) {
+            switch(direction) {
+                case 0:
+                    for(int i=L; i<=R; i++) {
+                        res.push_back(matrix[T][i]);
+                    }
+                    T++;
+                    break;
+                case 1:
+                    for(int i=T; i<=B; i++) {
+                        res.push_back(matrix[i][R]);
+                    }
+                    R--;                
+                    break;
+                case 2:
+                    for(int i=R; i>=L; i--) {
+                        res.push_back(matrix[B][i]);
+                    }
+                    B--;
+                    break;
+                case 3:
+                    for(int i=B; i>=T; i--) {
+                        res.push_back(matrix[i][L]);
+                    }
+                    L++;                
+                    break;
+                default:
+                    break;
+            }
+            direction = (direction+1)%4;
+        }
+    return res;
+    }
+};
