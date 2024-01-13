@@ -1,0 +1,66 @@
+/*
+
+Word Break
+Solved
+Medium
+Topics
+Companies
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+ 
+
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet","code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+Example 2:
+
+Input: s = "applepenapple", wordDict = ["apple","pen"]
+Output: true
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+Note that you are allowed to reuse a dictionary word.
+Example 3:
+
+Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+Output: false
+Intuition:  create a recursion tree, each subtree is made after partitioning substrings, ex leetcode => l and eetcode, check for l and eetcode in the set of wordDict.
+*/
+
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> myset(wordDict.begin(), wordDict.end());
+        int n = s.size();
+        bool dp[n+1][n+1];
+        
+        for(int length=1;length<=n;++length) //Window Size
+        {
+            int start = 1;
+            int end = length;
+            while(end<=n) //Sliding Window
+            {
+                string temp = s.substr(start-1,length);
+                if(myset.find(temp)!=myset.end())
+                    dp[start][end] = true;
+                else
+                {
+                    bool flag = false;
+                    for(int i=start;i<end;++i)
+                        if(dp[start][i] and dp[i+1][end])
+                        {
+                            flag = true;
+                            break;
+                        }
+                    dp[start][end] = flag;
+                }
+                start += 1;
+                end += 1;
+            }
+        }
+        return dp[1][n];
+    }
+};
